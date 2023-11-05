@@ -1,0 +1,57 @@
+Задание №1 
+
+select * from "Couriers";
+
+select * from "Orders";
+
+select c.login, count(o."courierId") from "Couriers" as c left join "Orders" as o on c.id=o."courierId" and o."inDelivery"=true group by c.login;
+
+  login  | count 
+---------+-------
+ ninja   |     2
+ nina222 |     2
+ nina    |     0
+
+
+ id | courierId | firstName | lastName |     address      | metroStation |      phone       | rentTime |      deliveryDate      | track  | inDelivery |  color  |          comment           | cancelled | finished |         createdAt          |         updatedAt          
+----+-----------+-----------+----------+------------------+--------------+------------------+----------+------------------------+--------+------------+---------+----------------------------+-----------+----------+----------------------------+----------------------------
+  1 |         1 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00 |  46341 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 13:44:12.074+00 | 2023-11-04 13:47:30.936+00
+  2 |         1 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00 |  46341 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 13:47:31.375+00 | 2023-11-04 13:47:31.375+00
+  3 |         3 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00 | 145717 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 14:09:59.471+00 | 2023-11-04 14:11:07.571+00
+  4 |         3 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00 | 145717 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 14:11:07.669+00 | 2023-11-04 14:11:07.669+00
+
+ id |  login  |           passwordHash           | firstName |         createdAt          |         updatedAt          
+----+---------+----------------------------------+-----------+----------------------------+----------------------------
+  1 | ninja   | 81dc9bdb52d04dc20036dbd8313ed055 | saske     | 2023-11-04 13:43:03.214+00 | 2023-11-04 13:43:03.214+00
+  2 | nina    | 81dc9bdb52d04dc20036dbd8313ed055 | saske     | 2023-11-04 13:51:55.155+00 | 2023-11-04 13:51:55.155+00
+  3 | nina222 | 81dc9bdb52d04dc20036dbd8313ed055 | saske     | 2023-11-04 14:09:53.251+00 | 2023-11-04 14:09:53.251+00
+
+
+
+
+Задание №2
+
+select o.track, 
+case 
+when o.finished=true then 2
+when o.cancelled=true then -1
+when o."inDelivery"=true then 1
+else 0
+end as status
+from "Orders"as o;
+
+ track  | status 
+--------+--------
+ 145717 |      1
+ 145717 |      1
+ 262579 |      0
+  46341 |      2
+  46341 |     -1
+
+ id | courierId | firstName | lastName |     address      | metroStation |      phone       | rentTime |        deliveryDate        | track  | inDelivery |  color  |          comment           | cancelled | finished |         createdAt          |         updatedAt          
+----+-----------+-----------+----------+------------------+--------------+------------------+----------+----------------------------+--------+------------+---------+----------------------------+-----------+----------+----------------------------+----------------------------
+  3 |         3 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00     | 145717 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 14:09:59.471+00 | 2023-11-04 14:11:07.571+00
+  4 |         3 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00     | 145717 | t          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 14:11:07.669+00 | 2023-11-04 14:11:07.669+00
+  5 |           | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00     | 262579 | f          | {BLACK} | Saske, come back to Konoha | f         | f        | 2023-11-04 14:30:18.42+00  | 2023-11-04 14:30:18.42+00
+  1 |         1 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2023-11-04 14:33:09.617+00 |  46341 | t          | {BLACK} | Saske, come back to Konoha | f         | t        | 2023-11-04 13:44:12.074+00 | 2023-11-04 14:33:09.617+00
+  2 |         1 | Naruto    | Uchiha   | Konoha, 142 apt. | 4            | +7 800 355 35 35 |        5 | 2020-06-06 00:00:00+00     |  46341 | t          | {BLACK} | Saske, come back to Konoha | t         | f        | 2023-11-04 13:47:31.375+00 | 2023-11-04 13:47:31.375+00
