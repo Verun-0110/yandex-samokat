@@ -1,3 +1,4 @@
+#Вера Абдулина, 10 поток, финальный проект, инженер по тестированию
 import sender_stand_request
 import data
 
